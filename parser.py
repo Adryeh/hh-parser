@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 from collections import namedtuple
 
 
+USER_QUERY = "Python junior"
 BASE_URL = "https://hh.ru"
-URL = "https://hh.ru/search/vacancy?L_is_autosearch=false&area=1&clusters=" \
-      "true&enable_snippets=true&text=Python+junior&page=0"
+URL = f"https://hh.ru/search/vacancy?L_is_autosearch=false&area=1&clusters=true&enable_snippets=true&text={'+'.join(USER_QUERY.split())}&page=0"
 
 
 Vacancy = namedtuple("Vacancy", "title company metro link")
@@ -28,10 +28,13 @@ def parse_data():
         vacancies = soup.find_all("div", {"class": "vacancy-serp-item"})
         # Получаем нужные данные по каждому блоку
         for vacancy in vacancies:
-            title = vacancy.find("div", {"class": "resume-search-item__name"}).text
-            link = vacancy.find("a")['href']
-            company = vacancy.find("a", {"class": "bloko-link_secondary"}).text
-            metro = vacancy.find("span", {"class": "vacancy-serp-item__meta-info"}).text
+            try:
+                title = vacancy.find("div", {"class": "resume-search-item__name"}).text
+                link = vacancy.find("a")['href']
+                company = vacancy.find("a", {"class": "bloko-link_secondary"}).text
+                metro = vacancy.find("span", {"class": "vacancy-serp-item__meta-info"}).text
+            except:
+                title, company, metro, link = 'None'
             # Объеденяем данные в namedtuple Vacancy
             item_data = Vacancy(title, company, metro, link)
             data.append(item_data)
@@ -43,4 +46,3 @@ def parse_data():
         else:
             break
     return data
-
