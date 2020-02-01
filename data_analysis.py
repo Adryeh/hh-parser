@@ -37,3 +37,4 @@ rub_avg = get_avg_from_ruble_salaries(rub_salaries)
 
 
 utils.print_data(DATA)
+print(rub_avg)

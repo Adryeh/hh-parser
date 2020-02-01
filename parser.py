@@ -35,23 +35,23 @@ def parse_data():
         for vacancy in vacancies:
             try:
                 title = vacancy.find("div", {"class": "resume-search-item__name"}).text
-            except ValueError:
+            except:
                 title = 'No title'
             try:
                 link = vacancy.find("a")['href']
-            except ValueError:
+            except:
                 link = 'No link'
             try:
                 company = vacancy.find("a", {"class": "bloko-link_secondary"}).text
-            except ValueError:
+            except:
                 company = 'No company'
             try:
                 metro = vacancy.find("span", {"class": "vacancy-serp-item__meta-info"}).text
-            except ValueError:
+            except:
                 metro = 'No metro'
             try:
                 salary = vacancy.find("div", {"class": "vacancy-serp-item__compensation"}).text.replace(u'\xa0', u' ')
-            except ValueError:
+            except:
                 salary = 'No salary'
             # Объеденяем данные в namedtuple Vacancy
             item_data = Vacancy(title, company, metro, link, salary)
