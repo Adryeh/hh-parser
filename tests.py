@@ -1,6 +1,7 @@
 import unittest
 import parser
 import random
+from data_analysis import rub_avg
 from utils import user_agents_list, get_currency_to_ruble_value
 
 
@@ -17,3 +18,7 @@ class Test(unittest.TestCase):
         dollar = get_currency_to_ruble_value('usd')
         euro = get_currency_to_ruble_value('eur')
         self.assertEqual(type(dollar), float) and self.assertEqual(type(euro), float)
+
+
+    def test_typeof_avg_salary(self):
+        self.assertEqual(type(rub_avg), int)

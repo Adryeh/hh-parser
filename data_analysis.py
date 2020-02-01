@@ -34,7 +34,3 @@ all_salaries = get_all_salaries(DATA)
 usd_salaries = get_dollar_salaries(all_salaries)
 rub_salaries = get_ruble_salaries(all_salaries)
 rub_avg = get_avg_from_ruble_salaries(rub_salaries)
-
-
-utils.print_data(DATA)
-print(rub_avg)
