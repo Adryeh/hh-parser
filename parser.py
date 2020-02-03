@@ -7,31 +7,28 @@ from utils import user_agents_list
 
 USER_QUERY = "Python junior"
 BASE_URL = "https://hh.ru"
-URL = f"https://hh.ru/search/vacancy?L_is_autosearch=false&area=1&clusters=" \
-      f"true&enable_snippets=true&text={'+'.join(USER_QUERY.split())}&page=0"
 
 
 Vacancy = namedtuple("Vacancy", "title company metro link salary")
 
 
 def get_html(url, user_agent):
-    # запрос на источник
     response = requests.get(url, headers={'User-Agent': user_agent})
     return response
 
 
-def parse_data():
+def parse_data(query):
+    print('START PARSING')
     baser_url = BASE_URL
-    url = URL
+    url = f"https://hh.ru/search/vacancy?L_is_autosearch=false&area=1&clusters=" \
+          f"true&enable_snippets=true&text={'+'.join(query.split())}&page=0"
     data = []
     while True:
         user_agent = str(random.choice(user_agents_list))
         html = get_html(url, user_agent).text
         soup = BeautifulSoup(html, "lxml")
         soup.prettify(formatter=lambda s: s.replace(u'\xa0', ' '))
-        # Находим все блоки вакансий
         vacancies = soup.find_all("div", {"class": "vacancy-serp-item"})
-        # Получаем нужные данные по каждому блоку
         for vacancy in vacancies:
             try:
                 title = vacancy.find("div", {"class": "resume-search-item__name"}).text
@@ -63,4 +60,5 @@ def parse_data():
             url = baser_url + next_button['href']
         else:
             break
+    print('END PARSING')
     return data
