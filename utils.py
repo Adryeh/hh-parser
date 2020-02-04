@@ -1,6 +1,7 @@
 import random
 import requests
 from bs4 import BeautifulSoup
+from config import SEPARATOR
 
 
 user_agents_list = [
@@ -52,8 +53,7 @@ def get_currency_to_ruble_value(currency):
         raise ValueError
 
 
-def print_data(data: list):
+def customize_data(data: list):
     for idx, item in enumerate(data):
-        print(f'ID: {idx+1}\nTitle: {item.title}\nCompany: {item.company}\nMetro: {item.metro}\nLink: {item.link}\n'
-              f'Salary: {item.salary}')
-        print('=' * 100)
+        yield f'\nID: {idx + 1}\nTitle: {item.title}\nCompany: {item.company}\nMetro: {item.metro}\nLink: ' \
+              f'{item.link}\nSalary: {item.salary}\n{SEPARATOR}'

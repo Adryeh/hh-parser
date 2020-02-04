@@ -2,11 +2,8 @@ import random
 import requests
 from bs4 import BeautifulSoup
 from collections import namedtuple
+from config import BASE_URL
 from utils import user_agents_list
-
-
-USER_QUERY = "Python junior"
-BASE_URL = "https://hh.ru"
 
 
 Vacancy = namedtuple("Vacancy", "title company metro link salary")
@@ -50,7 +47,6 @@ def parse_data(query):
                 salary = vacancy.find("div", {"class": "vacancy-serp-item__compensation"}).text.replace(u'\xa0', u' ')
             except:
                 salary = 'No salary'
-            # Объеденяем данные в namedtuple Vacancy
             item_data = Vacancy(title, company, metro, link, salary)
             data.append(item_data)
 

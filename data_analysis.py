@@ -2,7 +2,7 @@ import parser
 import utils
 
 
-DATA = parser.parse_data(query="Python junior")
+DATA = parser.parse_data(query="Vue junior")
 
 
 def get_all_salaries(data):
@@ -35,4 +35,4 @@ usd_salaries = get_dollar_salaries(all_salaries)
 rub_salaries = get_ruble_salaries(all_salaries)
 rub_avg = get_avg_from_ruble_salaries(rub_salaries)
 
-utils.print_data(DATA)
+print(''.join([i for i in utils.customize_data(DATA)]))
